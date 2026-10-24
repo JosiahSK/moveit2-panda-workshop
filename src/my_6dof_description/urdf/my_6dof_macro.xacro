@@ -1,0 +1,313 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <xacro:include filename="$(find my_6dof_description)/urdf/inc/inertia_macros.xacro"/>
+
+  <!-- Materials -->
+  <material name="dark_grey">
+    <color rgba="0.2 0.2 0.2 1.0"/>
+  </material>
+  <material name="bright_orange">
+    <color rgba="0.95 0.45 0.05 1.0"/>
+  </material>
+  <material name="metallic_silver">
+    <color rgba="0.75 0.75 0.78 1.0"/>
+  </material>
+  <material name="accent_blue">
+    <color rgba="0.1 0.4 0.8 1.0"/>
+  </material>
+  <material name="finger_grey">
+    <color rgba="0.3 0.3 0.35 1.0"/>
+  </material>
+
+  <xacro:macro name="my_6dof_robot" params="prefix">
+
+    <!-- World Link and Joint -->
+    <link name="world"/>
+
+    <joint name="${prefix}world_to_base" type="fixed">
+      <parent link="world"/>
+      <child link="${prefix}base_link"/>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+
+    <!-- Base Link -->
+    <link name="${prefix}base_link">
+      <visual>
+        <origin xyz="0 0 0.075" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.1" length="0.15"/>
+        </geometry>
+        <material name="dark_grey"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0.075" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.1" length="0.15"/>
+        </geometry>
+      </collision>
+      <xacro:cylinder_inertia m="5.0" r="0.1" h="0.15"/>
+    </link>
+
+    <!-- Joint 1: base_link -> shoulder_link -->
+    <joint name="${prefix}joint1" type="revolute">
+      <parent link="${prefix}base_link"/>
+      <child link="${prefix}shoulder_link"/>
+      <origin xyz="0 0 0.15" rpy="0 0 0"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="-3.14159" upper="3.14159" effort="150.0" velocity="3.14159"/>
+      <dynamics damping="0.5" friction="0.1"/>
+    </joint>
+
+    <!-- Shoulder Link -->
+    <link name="${prefix}shoulder_link">
+      <visual>
+        <origin xyz="0 0 0.075" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.08" length="0.15"/>
+        </geometry>
+        <material name="bright_orange"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0.075" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.08" length="0.15"/>
+        </geometry>
+      </collision>
+      <xacro:cylinder_inertia m="4.0" r="0.08" h="0.15"/>
+    </link>
+
+    <!-- Joint 2: shoulder_link -> upper_arm_link -->
+    <joint name="${prefix}joint2" type="revolute">
+      <parent link="${prefix}shoulder_link"/>
+      <child link="${prefix}upper_arm_link"/>
+      <origin xyz="0 0 0.15" rpy="0 0 0"/>
+      <axis xyz="0 1 0"/>
+      <limit lower="-3.14159" upper="3.14159" effort="150.0" velocity="3.14159"/>
+      <dynamics damping="0.5" friction="0.1"/>
+    </joint>
+
+    <!-- Upper Arm Link -->
+    <link name="${prefix}upper_arm_link">
+      <visual>
+        <origin xyz="0 0 0.2" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.06" length="0.4"/>
+        </geometry>
+        <material name="metallic_silver"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0.2" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.06" length="0.4"/>
+        </geometry>
+      </collision>
+      <xacro:cylinder_inertia m="4.5" r="0.06" h="0.4"/>
+    </link>
+
+    <!-- Joint 3: upper_arm_link -> forearm_link -->
+    <joint name="${prefix}joint3" type="revolute">
+      <parent link="${prefix}upper_arm_link"/>
+      <child link="${prefix}forearm_link"/>
+      <origin xyz="0 0 0.4" rpy="0 0 0"/>
+      <axis xyz="0 1 0"/>
+      <limit lower="-3.14159" upper="3.14159" effort="150.0" velocity="3.14159"/>
+      <dynamics damping="0.5" friction="0.1"/>
+    </joint>
+
+    <!-- Forearm Link -->
+    <link name="${prefix}forearm_link">
+      <visual>
+        <origin xyz="0 0 0.175" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.05" length="0.35"/>
+        </geometry>
+        <material name="bright_orange"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0.175" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.05" length="0.35"/>
+        </geometry>
+      </collision>
+      <xacro:cylinder_inertia m="2.5" r="0.05" h="0.35"/>
+    </link>
+
+    <!-- Joint 4: forearm_link -> wrist_1_link -->
+    <joint name="${prefix}joint4" type="revolute">
+      <parent link="${prefix}forearm_link"/>
+      <child link="${prefix}wrist_1_link"/>
+      <origin xyz="0 0 0.35" rpy="0 0 0"/>
+      <axis xyz="0 1 0"/>
+      <limit lower="-3.14159" upper="3.14159" effort="50.0" velocity="3.14159"/>
+      <dynamics damping="0.2" friction="0.05"/>
+    </joint>
+
+    <!-- Wrist 1 Link -->
+    <link name="${prefix}wrist_1_link">
+      <visual>
+        <origin xyz="0 0 0.05" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.045" length="0.1"/>
+        </geometry>
+        <material name="metallic_silver"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0.05" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.045" length="0.1"/>
+        </geometry>
+      </collision>
+      <xacro:cylinder_inertia m="1.2" r="0.045" h="0.1"/>
+    </link>
+
+    <!-- Joint 5: wrist_1_link -> wrist_2_link -->
+    <joint name="${prefix}joint5" type="revolute">
+      <parent link="${prefix}wrist_1_link"/>
+      <child link="${prefix}wrist_2_link"/>
+      <origin xyz="0 0 0.1" rpy="0 0 0"/>
+      <axis xyz="1 0 0"/>
+      <limit lower="-3.14159" upper="3.14159" effort="50.0" velocity="3.14159"/>
+      <dynamics damping="0.2" friction="0.05"/>
+    </joint>
+
+    <!-- Wrist 2 Link -->
+    <link name="${prefix}wrist_2_link">
+      <visual>
+        <origin xyz="0 0 0.04" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.04" length="0.08"/>
+        </geometry>
+        <material name="bright_orange"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0.04" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.04" length="0.08"/>
+        </geometry>
+      </collision>
+      <xacro:cylinder_inertia m="1.0" r="0.04" h="0.08"/>
+    </link>
+
+    <!-- Joint 6: wrist_2_link -> wrist_3_link -->
+    <joint name="${prefix}joint6" type="revolute">
+      <parent link="${prefix}wrist_2_link"/>
+      <child link="${prefix}wrist_3_link"/>
+      <origin xyz="0 0 0.08" rpy="0 0 0"/>
+      <axis xyz="0 0 1"/>
+      <limit lower="-6.28318" upper="6.28318" effort="30.0" velocity="6.28318"/>
+      <dynamics damping="0.1" friction="0.02"/>
+    </joint>
+
+    <!-- Wrist 3 Link -->
+    <link name="${prefix}wrist_3_link">
+      <visual>
+        <origin xyz="0 0 0.02" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.035" length="0.04"/>
+        </geometry>
+        <material name="dark_grey"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0.02" rpy="0 0 0"/>
+        <geometry>
+          <cylinder radius="0.035" length="0.04"/>
+        </geometry>
+      </collision>
+      <xacro:cylinder_inertia m="0.5" r="0.035" h="0.04"/>
+    </link>
+
+    <!-- Tool0 Link (flange frame) -->
+    <joint name="${prefix}flange_joint" type="fixed">
+      <parent link="${prefix}wrist_3_link"/>
+      <child link="${prefix}tool0"/>
+      <origin xyz="0 0 0.04" rpy="0 0 0"/>
+    </joint>
+
+    <link name="${prefix}tool0"/>
+
+    <!-- Gripper Base Joint -->
+    <joint name="${prefix}gripper_base_joint" type="fixed">
+      <parent link="${prefix}tool0"/>
+      <child link="${prefix}gripper"/>
+      <origin xyz="0 0 0.025" rpy="0 0 0"/>
+    </joint>
+
+    <!-- Gripper Base Link -->
+    <link name="${prefix}gripper">
+      <visual>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.06 0.12 0.05"/>
+        </geometry>
+        <material name="accent_blue"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.06 0.12 0.05"/>
+        </geometry>
+      </collision>
+      <xacro:box_inertia m="0.6" x="0.06" y="0.12" z="0.05"/>
+    </link>
+
+    <!-- Left Finger Joint (Prismatic) -->
+    <joint name="${prefix}gripper_joint" type="prismatic">
+      <parent link="${prefix}gripper"/>
+      <child link="${prefix}left_finger"/>
+      <origin xyz="0 0.035 0.05" rpy="0 0 0"/>
+      <axis xyz="0 1 0"/>
+      <limit lower="0.0" upper="0.04" effort="20.0" velocity="0.1"/>
+      <dynamics damping="0.1" friction="0.02"/>
+    </joint>
+
+    <!-- Left Finger Link -->
+    <link name="${prefix}left_finger">
+      <visual>
+        <origin xyz="0 0 0.04" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.02 0.015 0.08"/>
+        </geometry>
+        <material name="finger_grey"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0.04" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.02 0.015 0.08"/>
+        </geometry>
+      </collision>
+      <xacro:box_inertia m="0.1" x="0.02" y="0.015" z="0.08"/>
+    </link>
+
+    <!-- Right Finger Joint (Prismatic, Mimic of left finger) -->
+    <joint name="${prefix}right_finger_joint" type="prismatic">
+      <parent link="${prefix}gripper"/>
+      <child link="${prefix}right_finger"/>
+      <origin xyz="0 -0.035 0.05" rpy="0 0 0"/>
+      <axis xyz="0 1 0"/>
+      <limit lower="-0.04" upper="0.0" effort="20.0" velocity="0.1"/>
+      <mimic joint="${prefix}gripper_joint" multiplier="-1.0" offset="0.0"/>
+      <dynamics damping="0.1" friction="0.02"/>
+    </joint>
+
+    <!-- Right Finger Link -->
+    <link name="${prefix}right_finger">
+      <visual>
+        <origin xyz="0 0 0.04" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.02 0.015 0.08"/>
+        </geometry>
+        <material name="finger_grey"/>
+      </visual>
+      <collision>
+        <origin xyz="0 0 0.04" rpy="0 0 0"/>
+        <geometry>
+          <box size="0.02 0.015 0.08"/>
+        </geometry>
+      </collision>
+      <xacro:box_inertia m="0.1" x="0.02" y="0.015" z="0.08"/>
+    </link>
+
+  </xacro:macro>
+
+</robot>

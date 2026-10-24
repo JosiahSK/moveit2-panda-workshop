@@ -1,0 +1,68 @@
+# ROS 2 build artifacts
+build/
+install/
+log/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+*.egg
+dist/
+
+# C/C++ compiled files
+*.o
+*.so
+*.a
+*.lo
+*.la
+*.obj
+*.ko
+*.mod
+*.elf
+
+# CMake
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+*.cmake
+!*Config.cmake
+!*-config.cmake
+
+# IDE / editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+*.sublime-project
+*.sublime-workspace
+
+# ROS bags
+*.bag
+*.db3
+
+# Logs and temp files
+*.log
+*.tmp
+*.bak
+
+# Environment
+.env
+.envrc
+
+# Colcon
+.colcon_ws/
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Documentation build
+docs/_build/
+site/

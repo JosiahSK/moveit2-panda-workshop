@@ -1,0 +1,75 @@
+Panels:
+  - Class: rviz_common/Displays
+    Help Height: 78
+    Name: Displays
+    Property Tree Widget:
+      Expanded:
+        - /Grid1
+        - /RobotModel1
+        - /MotionPlanning1
+      Splitter Ratio: 0.5
+    Tree Height: 557
+  - Class: rviz_common/Selection
+    Name: Selection
+  - Class: rviz_common/Views
+    Expanded:
+      - /Current View1
+    Name: Views
+    Splitter Ratio: 0.5
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Class: rviz_default_plugins/Grid
+      Name: Grid
+      Enabled: true
+      Reference Frame: world
+      Value: true
+    - Class: rviz_default_plugins/RobotModel
+      Name: RobotModel
+      Enabled: true
+      Description Topic:
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+        Value: /robot_description
+      Robot Description: robot_description
+      TF Prefix: ""
+      Value: true
+    - Class: rviz_default_plugins/TF
+      Name: TF
+      Enabled: true
+      Show Axes: true
+      Show Names: false
+      Value: true
+    - Class: moveit_rviz_plugin/MotionPlanning
+      Name: MotionPlanning
+      Enabled: true
+      Move Group Namespace: ""
+      Planning Scene Topic: /monitored_planning_scene
+      Robot Description: robot_description
+      Planning Request:
+        Planning Group: arm
+        Query Start State: true
+        Query Goal State: true
+      Planned Path:
+        Loop Animation: false
+        Show Robot Visual: true
+      Scene Robot:
+        Show Robot Visual: true
+      Scene Geometry:
+        Show Scene Geometry: true
+      Value: true
+  Global Options:
+    Fixed Frame: world
+    Frame Rate: 30
+  Views:
+    Current:
+      Class: rviz_default_plugins/Orbit
+      Distance: 2.5
+      Focal Point: [0.0, 0.0, 0.5]
+      Pitch: 0.45
+      Yaw: 0.78
+Window Geometry:
+  Height: 800
+  Width: 1200

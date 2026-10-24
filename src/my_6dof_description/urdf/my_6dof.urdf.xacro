@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="my_6dof">
+
+  <xacro:arg name="prefix" default=""/>
+  <xacro:arg name="use_mock" default="false"/>
+
+  <xacro:include filename="$(find my_6dof_description)/urdf/my_6dof_macro.xacro"/>
+  <xacro:include filename="$(find my_6dof_description)/urdf/my_6dof.ros2_control.xacro"/>
+
+  <!-- Instantiate Robot -->
+  <xacro:my_6dof_robot prefix="$(arg prefix)"/>
+
+  <!-- Instantiate ros2_control -->
+  <xacro:my_6dof_ros2_control name="my_6dof_system" prefix="$(arg prefix)" use_mock="$(arg use_mock)"/>
+
+  <!-- Gazebo ROS 2 Control Plugin -->
+  <gazebo>
+    <plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+      <parameters>$(find my_6dof_controllers)/config/ros2_controllers.yaml</parameters>
+    </plugin>
+  </gazebo>
+
+</robot>
