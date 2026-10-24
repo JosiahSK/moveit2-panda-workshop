@@ -33,8 +33,8 @@ git clone -b humble https://github.com/JosiahSK/moveit2-panda-workshop.git ~/mov
 | Feature | Gazebo Classic | Gazebo Fortress | Gazebo Harmonic |
 |---------|---------------|-----------------|-----------------|
 | Package prefix | `gazebo_ros_pkgs` | `ros_gz` | `ros_gz` |
-| Control bridge | `ign_ros2_control` | `ign_ros2_control` | `gz_ros2_control` |
-| Sim plugin tag | `libgazebo_ros2_control.so` | `libign_ros2_control.so` | `libgz_ros2_control.so` |
+| Control bridge | `ign_ros2_control` | `ign_ros2_control` | `ign_ros2_control` |
+| Sim plugin tag | `libgazebo_ros2_control.so` | `libign_ros2_control.so` | `libign_ros2_control.so` |
 | World format | SDF | SDF | SDF |
 
 > [!IMPORTANT]
@@ -47,7 +47,7 @@ git clone -b humble https://github.com/JosiahSK/moveit2-panda-workshop.git ~/mov
 >
 > **Jazzy (Harmonic):**
 > ```xml
-> <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+> <plugin>ign_ros2_control/GazeboSimSystem</plugin>
 > ```
 
 ---
@@ -58,8 +58,8 @@ git clone -b humble https://github.com/JosiahSK/moveit2-panda-workshop.git ~/mov
 
 | Jazzy | Humble |
 |-------|--------|
-| `gz_ros2_control` | `ign_ros2_control` |
-| `gz_ros2_control_demos` | `ign_ros2_control_demos` |
+| `ign_ros2_control` | `ign_ros2_control` |
+| `ign_ros2_control_demos` | `ign_ros2_control_demos` |
 
 ### MoveIt2 Python API
 
@@ -157,7 +157,7 @@ ros2 launch my_6dof_bringup gazebo_moveit.launch.py use_gazebo_classic:=true
 
 | Issue | Status | Workaround |
 |-------|--------|-----------|
-| `gz_ros2_control` not available | Expected — use `ign_ros2_control` | See package name differences above |
+| `ign_ros2_control` not available | Expected — use `ign_ros2_control` | See package name differences above |
 | MoveItPy binary not in apt | May require source build | Build `moveit2` from source on Humble |
 | Gazebo topic bridge names differ | `ros_gz_bridge` vs `gazebo_ros` | Use `ign_ros2_control` launch files |
 | Python3.10 type hints differ | Older Python | Minor — no functional impact |
@@ -171,7 +171,30 @@ If you want to upgrade from Humble to Jazzy:
 1. Install Ubuntu 24.04 (clean install recommended)
 2. Install ROS 2 Jazzy
 3. Switch to the `jazzy` branch: `git checkout jazzy`
-4. Replace `ign_ros2_control` → `gz_ros2_control` in URDF
+4. Replace `ign_ros2_control` → `ign_ros2_control` in URDF
 5. Update Gazebo from Classic/Fortress → Harmonic
 
 See [jazzy_notes.md](./jazzy_notes.md) for Jazzy-specific details.
+
+## Key API Differences from Jazzy
+
+### Gazebo Plugin Tag
+**Jazzy (Harmonic):**
+```xml
+<plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin"/>
+```
+**Humble (Fortress/Classic):**
+```xml
+<plugin filename="libign_ros2_control-system.so" name="ign_ros2_control::IgnitionROS2ControlPlugin"/>
+```
+
+### Launch file imports
+**Jazzy:** `from launch_ros.actions import Node` with `gz_ros2_control`
+**Humble:** Uses `ign_ros2_control` package name
+
+### Colcon build
+```bash
+source /opt/ros/humble/setup.bash
+colcon build --symlink-install
+source install/setup.bash
+```

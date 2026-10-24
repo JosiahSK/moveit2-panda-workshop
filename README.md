@@ -3,12 +3,12 @@
 [![ROS2 Humble](https://img.shields.io/badge/ROS2-Humble-blue?logo=ros)](https://docs.ros.org/en/humble/)
 [![ROS2 Jazzy](https://img.shields.io/badge/ROS2-Jazzy-green?logo=ros)](https://docs.ros.org/en/jazzy/)
 [![MoveIt2](https://img.shields.io/badge/MoveIt2-enabled-orange)](https://moveit.ros.org/)
-[![Gazebo Harmonic](https://img.shields.io/badge/Gazebo-Harmonic-blue)](https://gazebosim.org/)
+[![Gazebo Classic / Fortress](https://img.shields.io/badge/Gazebo-Harmonic-blue)](https://gazebosim.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
-An **educational MoveIt2 workspace** for learning robot motion planning with a custom 6-DOF arm and the Franka Panda robot. Includes RViz2 interactive motion planning, Gazebo Harmonic simulation, and a Python pick-and-place demo.
+An **educational MoveIt2 workspace** for learning robot motion planning with a custom 6-DOF arm and the Franka Panda robot. Includes RViz2 interactive motion planning, Gazebo Classic / Fortress simulation, and a Python pick-and-place demo.
 
-> **Branch:** This is the `jazzy` branch (ROS 2 Jazzy Jalisco + Gazebo Harmonic). For ROS 2 Humble, switch to the [`humble`](https://github.com/JosiahSK/moveit2-panda-workshop/tree/humble) branch.
+> **Branch:** This is the `jazzy` branch (ROS 2 Humble Jalisco + Gazebo Classic / Fortress). For ROS 2 Humble, switch to the [`humble`](https://github.com/JosiahSK/moveit2-panda-workshop/tree/humble) branch.
 
 ---
 
@@ -68,7 +68,7 @@ flowchart TD
         Grip["GripperActionController"]
     end
 
-    subgraph Sim["Gazebo Harmonic"]
+    subgraph Sim["Gazebo Classic / Fortress"]
         World["Robot World"]
         GzCtrl["gz_ros2_control Plugin"]
     end
@@ -99,7 +99,7 @@ flowchart TD
 | [`my_6dof_description`](./src/my_6dof_description/) | Xacro robot model: 6 joints, gripper, inertias, `ros2_control` tags |
 | [`my_6dof_moveit_config`](./src/my_6dof_moveit_config/) | SRDF, KDL kinematics, OMPL planners, controller mapping, RViz config |
 | [`my_6dof_controllers`](./src/my_6dof_controllers/) | `ros2_control` YAML configs + controller spawner launch |
-| [`my_6dof_gazebo`](./src/my_6dof_gazebo/) | Gazebo Harmonic SDF world + entity spawner |
+| [`my_6dof_gazebo`](./src/my_6dof_gazebo/) | Gazebo Classic / Fortress SDF world + entity spawner |
 | [`my_6dof_bringup`](./src/my_6dof_bringup/) | Top-level launch files + `pick_and_place.py` demo |
 | [`panda_description`](./panda_ign_moveit2/panda_description/) | Franka Panda URDF + meshes (reference robot) |
 | [`panda_moveit_config`](./panda_ign_moveit2/panda_moveit_config/) | Panda MoveIt2 SRDF + config (reference) |
@@ -117,13 +117,13 @@ flowchart TD
 
 ### Software
 ```bash
-# Check ROS 2 Jazzy is installed
+# Check ROS 2 Humble is installed
 ros2 --version          # expected: ros2cli 0.x.x
 
 # Check MoveIt2
 ros2 pkg list | grep moveit  # should list moveit_ros_planning etc.
 
-# Check Gazebo Harmonic
+# Check Gazebo Classic / Fortress
 gz sim --version        # expected: Gazebo Sim, version 8.x.x
 
 # Check colcon
@@ -134,11 +134,11 @@ colcon version-check
 
 ## Installation & Build
 
-### ROS 2 Jazzy (this branch — default)
+### ROS 2 Humble (this branch — default)
 
 ```bash
-# 1. Source ROS 2 Jazzy
-source /opt/ros/jazzy/setup.bash
+# 1. Source ROS 2 Humble
+source /opt/ros/humble/setup.bash
 
 # 2. Clone this repo
 git clone https://github.com/JosiahSK/moveit2-panda-workshop.git ~/moveit2_ws
@@ -209,7 +209,7 @@ ros2 launch my_6dof_bringup demo.launch.py
 ```bash
 ros2 launch my_6dof_bringup gazebo_moveit.launch.py
 ```
-**Starts:** Gazebo Harmonic + `move_group` + `ros2_control` + real PID controllers + RViz2
+**Starts:** Gazebo Classic / Fortress + `move_group` + `ros2_control` + real PID controllers + RViz2
 
 **Use for:** Physics-accurate simulation. Robot moves realistically with inertia and joint limits enforced by the Gazebo physics engine.
 
@@ -397,7 +397,7 @@ If empty, the `gz_ros2_control` plugin failed to load. Check the Gazebo terminal
 
 You haven't sourced ROS 2:
 ```bash
-source /opt/ros/jazzy/setup.bash   # Jazzy
+source /opt/ros/humble/setup.bash   # Jazzy
 # or
 source /opt/ros/humble/setup.bash  # Humble
 ```
@@ -453,7 +453,7 @@ Contributions, bug reports, and improvements are welcome!
 5. Open a Pull Request against the `jazzy` branch
 
 ### Branch Policy
-- `jazzy` — primary branch (ROS 2 Jazzy + Gazebo Harmonic)
+- `jazzy` — primary branch (ROS 2 Humble + Gazebo Classic / Fortress)
 - `humble` — maintenance branch (ROS 2 Humble + Gazebo Classic/Fortress)
 
 ### License
@@ -466,6 +466,6 @@ The Franka Panda URDF and meshes in `panda_ign_moveit2/` are licensed under the 
 <p align="center">
   Built for teaching MoveIt2 and ROS 2 robot manipulation 🤖<br>
   <a href="https://moveit.ros.org/">MoveIt2</a> •
-  <a href="https://docs.ros.org/en/jazzy/">ROS 2 Jazzy</a> •
-  <a href="https://gazebosim.org/">Gazebo Harmonic</a>
+  <a href="https://docs.ros.org/en/jazzy/">ROS 2 Humble</a> •
+  <a href="https://gazebosim.org/">Gazebo Classic / Fortress</a>
 </p>
