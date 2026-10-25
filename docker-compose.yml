@@ -1,0 +1,19 @@
+services:
+  moveit2-workshop:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        ROS_DISTRO: jazzy
+    image: moveit2-workshop:jazzy
+    container_name: moveit2_workshop_container
+    network_mode: host
+    ipc: host
+    privileged: true
+    environment:
+      - DISPLAY=${DISPLAY}
+      - QT_X11_NO_MITSHM=1
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+      - ~/.Xauthority:/root/.Xauthority:rw
+    command: bash -c "ros2 launch my_6dof_bringup demo.launch.py"
