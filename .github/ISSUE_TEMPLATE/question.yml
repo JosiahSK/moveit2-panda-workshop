@@ -1,0 +1,28 @@
+name: Student Question / Help
+description: Ask a question about MoveIt 2 concepts, kinematics, or the lab exercises
+labels: ["question", "education"]
+body:
+  - type: markdown
+    attributes:
+      value: Need clarification on motion planning, trajectory execution, or URDF/SRDF? Ask here!
+  - type: dropdown
+    id: topic
+    attributes:
+      label: Workshop Topic
+      options:
+        - URDF / Robot Description
+        - MoveIt 2 / SRDF Setup
+        - Motion Planning / OMPL
+        - ros2_control / Trajectory Execution
+        - Gazebo Physics Simulation
+        - Pick-and-Place Python API
+        - Lab Exercises
+    validations:
+      required: true
+  - type: textarea
+    id: question
+    attributes:
+      label: Your Question
+      description: Describe what you are trying to achieve and where you need guidance.
+    validations:
+      required: true

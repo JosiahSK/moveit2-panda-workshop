@@ -1,0 +1,41 @@
+name: Bug Report
+description: Create a report to help us improve the MoveIt 2 workshop
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for reporting an issue! Please provide as much detail as possible.
+  - type: dropdown
+    id: ros_distro
+    attributes:
+      label: ROS 2 Distribution
+      description: Which ROS 2 version are you using?
+      options:
+        - ROS 2 Jazzy (Ubuntu 24.04)
+        - ROS 2 Humble (Ubuntu 22.04)
+        - Docker
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: Bug Description
+      description: A clear and concise description of what the bug is.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to Reproduce
+      description: Exact commands run in terminal.
+      placeholder: |
+        1. ros2 launch my_6dof_bringup demo.launch.py
+        2. Plan to pose 'ready'
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Terminal Output / Error Logs
+      description: Paste relevant terminal logs.
+      render: shell
